@@ -1,18 +1,9 @@
-mod constants;
-mod error;
-mod utilities;
+pub mod constants;
+pub mod error;
+pub mod utilities;
 
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+pub use self::constants::{
+    DRUM_MAP, INSTRUMENT_CLASSES, INSTRUMENT_MAP, KEY_NUMBER_TO_MIDI_KEY_SIGNATURE_MAP,
+    MIDI_KEY_SIGNATURE_TO_KEY_NUMBER_MAP,
+};
+pub use self::utilities::{key_number_to_key_name, midi_key_signature_to_key_number};
