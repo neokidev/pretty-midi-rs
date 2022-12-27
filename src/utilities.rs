@@ -68,3 +68,37 @@ pub fn midi_key_signature_to_key_number(key: i8, scale: bool) -> u8 {
         .get(&(key, scale))
         .unwrap())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use anyhow::Result;
+
+    #[test]
+    fn key_number_0_is_c_major() {
+        assert_eq!(key_number_to_key_name(0).unwrap(), "C Major");
+    }
+
+    #[test]
+    fn key_number_12_is_c_minor() {
+        assert_eq!(key_number_to_key_name(12).unwrap(), "C minor");
+    }
+
+    #[test]
+    fn key_number_13_is_c_minor() {
+        assert_eq!(key_number_to_key_name(13).unwrap(), "C# minor");
+    }
+
+    #[test]
+    #[should_panic]
+    fn key_number_24() {
+        key_number_to_key_name(24).unwrap();
+    }
+
+    #[test]
+    fn test_midi_key_signature_to_key_number() {
+        assert_eq!(midi_key_signature_to_key_number(-7, false), 11);
+        assert_eq!(midi_key_signature_to_key_number(0, false), 0);
+        assert_eq!(midi_key_signature_to_key_number(7, true), 22);
+    }
+}
