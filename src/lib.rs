@@ -1,5 +1,6 @@
 mod constants;
 mod error;
+mod utilities;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
