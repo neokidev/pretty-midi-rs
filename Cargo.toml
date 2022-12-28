@@ -11,3 +11,6 @@ midly = "0.5.2"
 once_cell = "1.16.0"
 serde = { version = "1.0.152", features = ["derive"] }
 thiserror = "1.0.38"
+
+[dev-dependencies]
+approx = "0.5.1"

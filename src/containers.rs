@@ -222,3 +222,72 @@ impl Display for Text {
         write!(f, "{} at {:.2} seconds", self.text, self.time)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use approx::assert_abs_diff_eq;
+
+    #[test]
+    fn test_get_note_duration() {
+        let note = Note::new(100, 60, 1.2, 3.6);
+        assert_abs_diff_eq!(note.get_duration(), 2.4, epsilon = 1e-15);
+    }
+
+    #[test]
+    fn time_signature_numerator_is_0() {
+        let err = TimeSignature::new(0, 4, 1.5).unwrap_err();
+        assert_eq!(
+            "ValueError: 0 is not a valid `numerator` value".to_string(),
+            err.to_string()
+        );
+    }
+
+    #[test]
+    fn time_signature_denominator_is_0() {
+        let err = TimeSignature::new(4, 0, 1.5).unwrap_err();
+        assert_eq!(
+            "ValueError: 0 is not a valid `denominator` value".to_string(),
+            err.to_string()
+        );
+    }
+
+    #[test]
+    fn time_signature_time_is_negative() {
+        let err = TimeSignature::new(4, 4, -1.5).unwrap_err();
+        assert_eq!(
+            "ValueError: -1.5 is not a valid `time` value".to_string(),
+            err.to_string()
+        );
+    }
+
+    #[test]
+    fn key_signature_is_greater_than_23() {
+        let err = KeySignature::new(24, 1.5).unwrap_err();
+        assert_eq!(
+            "ValueError: 24 is not a valid `key_number` type or value".to_string(),
+            err.to_string()
+        );
+    }
+
+    #[test]
+    fn key_signature_time_is_negative() {
+        let err = KeySignature::new(0, -1.5).unwrap_err();
+        assert_eq!(
+            "ValueError: -1.5 is not a valid `time` type or value".to_string(),
+            err.to_string()
+        );
+    }
+
+    #[test]
+    fn print_lyric() {
+        let lyric = Lyric::new("test lyric", 1.5);
+        assert_eq!("test lyric at 1.50 seconds".to_string(), lyric.to_string())
+    }
+
+    #[test]
+    fn print_text() {
+        let text = Text::new("test text", 1.5);
+        assert_eq!("test text at 1.50 seconds".to_string(), text.to_string())
+    }
+}
