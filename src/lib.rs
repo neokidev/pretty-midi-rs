@@ -1,6 +1,8 @@
 pub mod constants;
 pub mod containers;
 pub mod error;
+pub mod instrument;
+pub mod pretty_midi;
 pub mod utilities;
 
 pub use self::constants::{
@@ -10,4 +12,6 @@ pub use self::constants::{
 pub use self::containers::{
     ControlChange, KeySignature, Lyric, Note, PitchBend, Text, TimeSignature,
 };
+pub use self::instrument::Instrument;
+pub use self::pretty_midi::PrettyMIDI;
 pub use self::utilities::{key_number_to_key_name, midi_key_signature_to_key_number};
